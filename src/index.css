@@ -13,8 +13,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 220 70% 62%; /* Updated: Muted Blue */
+    --primary-foreground: 210 40% 98%; /* Existing: Good contrast with new primary */
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -32,23 +32,33 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 0.375rem; /* Updated: 6px base radius */
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Typography */
+    --font-family-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Glassmorphism */
+    --glass-bg-hsl: 0 0% 100%; /* Base HSL for glass effect (e.g., white) */
+    --glass-opacity: 0.15;
+    --glass-fallback-bg: 210 20% 98%; /* Opaque fallback (e.g., very light cool gray) */
+    --glass-blur: 10px;
+
+    /* Scrollbars */
+    --scrollbar-thumb: 220 15% 70%; /* Muted gray-blue */
+    --scrollbar-thumb-hover: 220 15% 60%;
   }
 
   .dark {
@@ -61,8 +71,8 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 210 40% 98%; /* Existing: suitable for dark mode */
+    --primary-foreground: 222.2 47.4% 11.2%; /* Existing: suitable for dark mode */
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -79,6 +89,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -87,6 +98,16 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Glassmorphism */
+    --glass-bg-hsl: 222.2 84% 4.9%; /* Base HSL for glass effect (e.g., current dark bg) */
+    --glass-opacity: 0.15; /* Opacity can be adjusted for dark mode if needed */
+    --glass-fallback-bg: 222.2 84% 10%; /* Opaque fallback (e.g., slightly lighter dark bg) */
+    /* --glass-blur can typically be the same for light/dark */
+
+    /* Scrollbars */
+    --scrollbar-thumb: 220 15% 40%; /* Darker muted gray-blue */
+    --scrollbar-thumb-hover: 220 15% 50%;
   }
 }
 
@@ -97,5 +118,37 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-family-sans);
+    font-weight: var(--font-weight-normal);
+  }
+
+  /* Custom Scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--scrollbar-thumb));
+    border-radius: 4px; /* As per design specification */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--scrollbar-thumb-hover));
+  }
+
+  /* For Firefox */
+  * { /* Applies to elements that can scroll */
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--scrollbar-thumb)) transparent; /* thumb and track color */
+  }
+}
+
+@layer components {
+  .glass-effect {
+    background-color: hsl(var(--glass-bg-hsl) / var(--glass-opacity));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur)); /* For Safari compatibility */
   }
 }
