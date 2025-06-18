@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	darkMode: ["class"],
@@ -61,13 +62,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				glassFallback: 'hsl(var(--glass-fallback-bg))', // New color for glassmorphism fallback
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: 'calc(var(--radius) + 2px)', // Now 8px (0.375rem + 2px)
+				md: 'var(--radius)',             // Now 6px (0.375rem)
+				sm: 'calc(var(--radius) - 2px)'  // Now 4px (0.375rem - 2px)
 			},
+			fontFamily: {
+        sans: ['var(--font-family-sans)', ...defaultTheme.fontFamily.sans],
+      },
 			keyframes: {
 				'accordion-down': {
 					from: {
